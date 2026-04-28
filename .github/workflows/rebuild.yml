@@ -1,4 +1,4 @@
-name: Daily HF Space factory rebuild
+name: Daily HF Spaces factory rebuild
 
 on:
   schedule:
@@ -16,7 +16,7 @@ jobs:
       - name: Install huggingface_hub
         run: pip install -U huggingface_hub
 
-      - name: Factory reboot Space
+      - name: Factory reboot tigredicarta
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
@@ -24,9 +24,18 @@ jobs:
           import os
           from huggingface_hub import HfApi
           api = HfApi(token=os.environ["HF_TOKEN"])
-          api.restart_space(
-              repo_id="tigredicarta/prprprpr",
-              factory_reboot=True,
-          )
-          print("Factory reboot triggered")
+          api.restart_space(repo_id="tigredicarta/prprprpr", factory_reboot=True)
+          print("Triggered tigredicarta/prprprpr")
+          EOF
+
+      - name: Factory reboot catedicarta
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN_CATEDICARTA }}
+        run: |
+          python - <<'EOF'
+          import os
+          from huggingface_hub import HfApi
+          api = HfApi(token=os.environ["HF_TOKEN"])
+          api.restart_space(repo_id="catedicarta/<USERNAME_2>", factory_reboot=True)
+          print("Triggered catedicarta")
           EOF
