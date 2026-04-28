@@ -1,0 +1,32 @@
+name: Daily HF Space factory rebuild
+
+on:
+  schedule:
+    - cron: '0 4 * * *'
+  workflow_dispatch:
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install huggingface_hub
+        run: pip install -U huggingface_hub
+
+      - name: Factory reboot Space
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          python - <<'EOF'
+          import os
+          from huggingface_hub import HfApi
+          api = HfApi(token=os.environ["HF_TOKEN"])
+          api.restart_space(
+              repo_id="prprprpr/tigredicarta",
+              factory_reboot=True,
+          )
+          print("Factory reboot triggered")
+          EOF
