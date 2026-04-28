@@ -28,7 +28,7 @@ jobs:
           print("Triggered tigredicarta/prprprpr")
           EOF
 
-      - name: Factory reboot catedicarta
+      - name: Factory reboot catedicar
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN_CATEDICARTA }}
         run: |
@@ -36,6 +36,6 @@ jobs:
           import os
           from huggingface_hub import HfApi
           api = HfApi(token=os.environ["HF_TOKEN"])
-          api.restart_space(repo_id="catedicarta/<USERNAME_2>", factory_reboot=True)
-          print("Triggered catedicarta")
+          api.restart_space(repo_id="catedicar/prprprpr", factory_reboot=True)
+          print("Triggered catedicar/prprprpr")
           EOF
