@@ -1,5 +1,4 @@
 name: Daily HF Spaces factory rebuild
-
 on:
   schedule:
     - cron: '0 4 * * *'
@@ -16,7 +15,7 @@ jobs:
       - name: Install huggingface_hub
         run: pip install -U huggingface_hub
 
-      - name: Factory reboot tigredicarta
+      - name: Factory reboot tigredicarta spaces
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
@@ -24,46 +23,16 @@ jobs:
           import os
           from huggingface_hub import HfApi
           api = HfApi(token=os.environ["HF_TOKEN"])
-          api.restart_space(repo_id="tigredicarta/prprprpr", factory_reboot=True)
-          print("Triggered tigredicarta/prprprpr")
+          for repo in [
+              "tigredicarta/prprprpr",
+              "tigredicarta/tiririrorir",
+              "tigredicarta/xoti",
+          ]:
+              api.restart_space(repo_id=repo, factory_reboot=True)
+              print(f"Triggered {repo}")
           EOF
 
-      - name: Factory reboot tiririrorir
-        env:
-          HF_TOKEN: ${{ secrets.HF_TOKEN }}
-        run: |
-          python - <<'EOF'
-          import os
-          from huggingface_hub import HfApi
-          api = HfApi(token=os.environ["HF_TOKEN"])
-          api.restart_space(repo_id="tigredicarta/tiririrorir", factory_reboot=True)
-          print("Triggered tigredicarta/tiririrorir")
-          EOF
-
-            - name: Factory reboot xoti
-
-        env:
-
-          HF_TOKEN: ${{ secrets.HF_TOKEN }}
-
-        run: |
-
-          python - <<'EOF'
-
-          import os
-
-          from huggingface_hub import HfApi
-
-          api = HfApi(token=os.environ["HF_TOKEN"])
-
-          api.restart_space(repo_id="tigredicarta/xoti", factory_reboot=True)
-
-          print("Triggered tigredicarta/xoti")
-
-          EOF
-
-
-      - name: Factory reboot catedicar
+      - name: Factory reboot catedicar spaces
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN_CATEDICARTA }}
         run: |
@@ -71,6 +40,9 @@ jobs:
           import os
           from huggingface_hub import HfApi
           api = HfApi(token=os.environ["HF_TOKEN"])
-          api.restart_space(repo_id="catedicar/prprprpr", factory_reboot=True)
-          print("Triggered catedicar/prprprpr")
+          for repo in [
+              "catedicar/prprprpr",
+          ]:
+              api.restart_space(repo_id=repo, factory_reboot=True)
+              print(f"Triggered {repo}")
           EOF
