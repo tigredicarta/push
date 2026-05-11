@@ -41,15 +41,25 @@ jobs:
           EOF
 
             - name: Factory reboot xoti
+
         env:
+
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
+
         run: |
+
           python - <<'EOF'
+
           import os
+
           from huggingface_hub import HfApi
+
           api = HfApi(token=os.environ["HF_TOKEN"])
+
           api.restart_space(repo_id="tigredicarta/xoti", factory_reboot=True)
+
           print("Triggered tigredicarta/xoti")
+
           EOF
 
 
