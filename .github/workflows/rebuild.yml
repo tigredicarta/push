@@ -19,7 +19,66 @@ jobs:
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
-          python - <<'EOF'
+          cat > /tmp/reboot_tigre.py << PYEOF
           import os
           from huggingface_hub import HfApi
-          api
+          api = HfApi(token=os.environ["HF_TOKEN"])
+          for repo in [
+              "tigredicarta/prprprpr",
+              "tigredicarta/tiririrorir",
+              "tigredicarta/xoti",
+          ]:
+              api.restart_space(repo_id=repo, factory_reboot=True)
+              print(f"Triggered {repo}")
+          PYEOF
+          python3 /tmp/reboot_tigre.py
+
+      - name: Factory reboot catedicar spaces
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN_CATEDICARTA }}
+        run: |
+          cat > /tmp/reboot_cate.py << PYEOF
+          import os
+          from huggingface_hub import HfApi
+          api = HfApi(token=os.environ["HF_TOKEN"])
+          for repo in [
+              "catedicar/prprprpr",
+          ]:
+              api.restart_space(repo_id=repo, factory_reboot=True)
+              print(f"Triggered {repo}")
+          PYEOF
+          python3 /tmp/reboot_cate.py
+
+      - name: Rebuild Koyeb app
+        env:
+          KOYEB_API_TOKEN: ${{ secrets.KOYEB_API_TOKEN }}
+        run: |
+          cat > /tmp/koyeb_redeploy.py << PYEOF
+          import os, urllib.request, json
+
+          headers = {
+              "Authorization": f"Bearer {os.environ['KOYEB_API_TOKEN']}",
+              "Content-Type": "application/json"
+          }
+
+          req = urllib.request.Request("https://app.koyeb.com/v1/apps", headers=headers)
+          apps = json.loads(urllib.request.urlopen(req).read())["apps"]
+          app = next(a for a in apps if a["name"] == "bumpy-thea")
+          app_id = app["id"]
+          print(f"App ID: {app_id}")
+
+          req = urllib.request.Request(f"https://app.koyeb.com/v1/services?app_id={app_id}", headers=headers)
+          services = json.loads(urllib.request.urlopen(req).read())["services"]
+          svc = next(s for s in services if s["name"] == "easyproxy")
+          svc_id = svc["id"]
+          print(f"Service ID: {svc_id}")
+
+          data = json.dumps({"skip_build": False}).encode()
+          req = urllib.request.Request(
+              f"https://app.koyeb.com/v1/services/{svc_id}/redeploy",
+              data=data, headers=headers, method="POST"
+          )
+          resp = json.loads(urllib.request.urlopen(req).read())
+          print(f"Redeploy triggerato: {resp}")
+          PYEOF
+          python3 /tmp/koyeb_redeploy.py
