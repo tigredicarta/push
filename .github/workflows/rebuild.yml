@@ -1,17 +1,3 @@
-Aggiungi `"tigredicarta/tvvvv"` alla lista del primo step:
-
-```yaml
-          for repo in [
-              "tigredicarta/prprprpr",
-              "tigredicarta/tiririrorir",
-              "tigredicarta/xoti",
-              "tigredicarta/tvvvv",
-          ]:
-```
-
-Workflow completo:
-
-```yaml
 name: Daily HF Spaces factory rebuild
 on:
   schedule:
@@ -97,4 +83,3 @@ jobs:
           print(f"Redeploy triggerato: {resp}")
           PYEOF
           python3 /tmp/koyeb_redeploy.py
-```
