@@ -26,8 +26,7 @@ jobs:
           for repo in [
               "tigredicarta/prprprpr",
               "tigredicarta/tiririrorir",
-              "tigredicarta/xoti",
-              "tigredicarta/tvvvv",
+                  "tigredicarta/tvvvv",
           ]:
               api.restart_space(repo_id=repo, factory_reboot=True)
               print(f"Triggered {repo}")
