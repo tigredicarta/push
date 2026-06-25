@@ -25,7 +25,7 @@ jobs:
           api = HfApi(token=os.environ["HF_TOKEN"])
           for repo in [
               "tigredicarta/prprprpr",
-              "tigredicarta/tiririrorir",
+              "tigredicarta/xoti",
                   "tigredicarta/tvvvv",
           ]:
               api.restart_space(repo_id=repo, factory_reboot=True)
