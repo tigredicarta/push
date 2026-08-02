@@ -8,29 +8,6 @@ jobs:
   rebuild:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-
-      - name: Install huggingface_hub
-        run: pip install -U huggingface_hub
-
-      - name: Factory reboot catedicar spaces
-        env:
-          HF_TOKEN: ${{ secrets.HF_TOKEN_CATEDICARTA }}
-        run: |
-          cat > /tmp/reboot_cate.py << PYEOF
-          import os
-          from huggingface_hub import HfApi
-          api = HfApi(token=os.environ["HF_TOKEN"])
-          for repo in [
-              "catedicar/prprprpr",
-          ]:
-              api.restart_space(repo_id=repo, factory_reboot=True)
-              print(f"Triggered {repo}")
-          PYEOF
-          python3 /tmp/reboot_cate.py
-
       - name: Rebuild Koyeb app
         env:
           KOYEB_API_TOKEN: ${{ secrets.KOYEB_API_TOKEN }}
